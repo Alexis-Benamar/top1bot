@@ -7,22 +7,15 @@ Discord bot that can register a user and keep track of his last Warzone victory 
 Useless therefore essential.
 
 ## TODO
-* [ ] Handle messages / replies
+* [*] The bot lives
+* [*] Register channels
+* [ ] Register user's victories
+* [ ] Only listen to channels saved in db
 * [ ] Admin commands
+* [ ] Handle messages / replies
 * [ ] Debounce / Queue write requests
 * [ ] Max queue size
 * [ ] Docs with command list
-
-## DB structure
-
-```typescript
-"users": {
-  "discord_id": {
-    "name": string
-    "tops": ["date1", "date2"...]
-  }
-}
-```
 
 ## Ideas
 
