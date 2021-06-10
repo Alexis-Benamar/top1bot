@@ -6,11 +6,12 @@
   "scripts": {
     "dev": "nodemon index.js"
   },
-  "type": "module",
   "dependencies": {
     "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",
-    "moment": "^2.29.1"
+    "knex": "^0.95.6",
+    "moment": "^2.29.1",
+    "pg": "^8.6.0"
   },
   "devDependencies": {
     "eslint": "^7.28.0",

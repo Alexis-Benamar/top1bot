@@ -26,5 +26,6 @@ Useless therefore essential.
 
 ## Ideas
 
-- If user submits more than 1 top1 in a 20 minute span, ignore request
+- If user submits more than 1 top1 in a 15 minute span, ignore request
 - Stats ? nb top1 per day / week / month / year ?
+- Only Admin can register channels
