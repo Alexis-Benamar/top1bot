@@ -1,8 +1,9 @@
 const Discord = require('discord.js')
 const dotenv = require('dotenv')
 
+const { now } = require('./commands/now')
 const { register } = require('./commands/register')
-const { ignoreMessage } = require('./utils.js')
+const { ignoreMessage } = require('./utils')
 
 dotenv.config()
 
@@ -18,6 +19,7 @@ client.once('ready', () => {
 
 client.on('message', message => {
   const { author, content } = message
+  const isAdmin = author.id === process.env.ADMIN_ID
 
   // Ignore unnecessary messages
   if (ignoreMessage(message)) return
@@ -31,6 +33,6 @@ client.on('message', message => {
 
   const command = content.split(' ')
 
-  if (command[1] === 'register') register(command, message)
+  if (command[1] === 'register' && isAdmin) register(message)
+  if (command[1] === 'now') now(message)
 })
-

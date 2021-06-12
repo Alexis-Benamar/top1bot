@@ -2,23 +2,24 @@ const { Message } = require('discord.js')
 const queries = require('../db/queries')
 
 /**
- * Handles 'register' commands
- * @param {Message} message
+ * @param {Message} message 
  */
-const register = async (message) => {
-  const { channel, guild } = message
+const now = async (message) => {
+  const { author, channel, guild } = message
 
   const exists = await queries.checkIfExists(channel)
 
-  if (exists) {
-    message.react('🔁')
+  if (!exists) {
+    message.react('❌')
   } else {
-    queries.registerChannel({
+    queries.recordTop1({
+      user_id: author.id,
+      user_name: author.username,
       channel_id: channel.id,
-      name: channel.name,
+      channel_name: channel.name,
       discord_id: guild.id,
       discord_name: guild.name,
-      created_at: new Date()
+      created_at: new Date(),
     }).then(() => {
       message.react('✅')
     }).catch(e => {
@@ -29,5 +30,5 @@ const register = async (message) => {
 }
 
 module.exports = {
-  register
+  now
 }

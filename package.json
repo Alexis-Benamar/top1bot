@@ -1,6 +1,7 @@
 {
   "name": "top1bot",
   "version": "1.0.0",
+  "license": "ISC",
   "description": "discord bot that tracks users warzone wins",
   "main": "index.js",
   "scripts": {
