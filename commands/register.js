@@ -1,5 +1,6 @@
 const { Message } = require('discord.js')
 const queries = require('../db/queries')
+const { channelExists } = require('../utils.js')
 
 /**
  * Handles 'register' commands
@@ -8,19 +9,19 @@ const queries = require('../db/queries')
 const register = async (message) => {
   const { channel, guild } = message
 
-  const exists = await queries.checkIfExists(channel)
+  const exists = await channelExists(channel)
 
   if (exists) {
-    message.channel.send(`Le channel <#${channel.id}> du serveur **${guild.name}** est déjà enregistré`)
+    channel.send(`Le channel <#${channel.id}> du serveur **${guild.name}** est déjà enregistré`)
   } else {
-    queries.registerChannel({
+    queries.channel.register({
       channel_id: channel.id,
       name: channel.name,
       discord_id: guild.id,
       discord_name: guild.name,
       created_at: new Date()
     }).then(() => {
-      message.channel.send(`Channel <#${channel.id}> enregistré ✅`)
+      channel.send(`Channel <#${channel.id}> enregistré ✅`)
     }).catch(e => {
       console.log(e)
       message.react('⚠❌')

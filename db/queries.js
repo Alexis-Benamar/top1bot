@@ -1,24 +1,47 @@
+const { Author, Channel } = require('discord.js')
 const db = require('./connection')
 
 module.exports = {
-  /**
-   * @param {Chanel} message
-   */
-  async checkIfExists(channel) {
-    const [checkChannel] =
-      await db('channels')
-        .where('channel_id', channel.id)
+  channel: {
+    /**
+     * @param {Channel} channel
+     */
+    async checkIfExists(channel) {
+      const [checkChannel] =
+        await db('channels')
+          .where('channel_id', channel.id)
 
-    return checkChannel !== undefined
+      return checkChannel !== undefined
+    },
+    /**
+     * @param newChannel
+     */
+    async register(newChannel) {
+      const [id] = await db('channels').insert(newChannel).returning('id')
+
+      return id
+    },
   },
-  async registerChannel(channel) {
-    const [id] = await db('channels').insert(channel).returning('id')
+  top1: {
+    /**
+     * @param {Author} author
+     */
+    async getLast(author) {
+      const [lastTop1] =
+        await db('top1')
+          .where('user_id', author.id)
+          .orderBy('created_at', 'desc')
+          .limit(1)
 
-    return id
+      return lastTop1
+    },
+    /**
+     * @param {NewTop1} top1
+     */
+    async record(top1) {
+      const [id] = await db('top1').insert(top1).returning('id')
+
+      return id
+    },
   },
-  async recordTop1(top1) {
-    const [id] = await db('top1').insert(top1).returning('id')
-
-    return id
-  }
 }

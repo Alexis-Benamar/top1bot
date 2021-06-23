@@ -15,8 +15,6 @@ Useless therefore essential.
 * [ ] Load registered channels at startup instead of checking everytime
 * [ ] Handle messages / replies
 * [ ] Refacto using command loader / handler
-* [ ] Debounce / Queue write requests
-* [ ] Max queue size
 * [ ] Docs with command list
 * [ ] i18
 
@@ -24,4 +22,5 @@ Useless therefore essential.
 
 * [ ] If user submits more than 1 top1 in a 15 minute span, ignore request
 * [ ] Stats ? nb top1 per day / week / month / year ?
+  * [ ] command: `last <day, week, month, year, 5 -> last 5 top1>`
 * [*] Only Admin can register channels

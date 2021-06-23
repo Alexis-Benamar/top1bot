@@ -1,18 +1,15 @@
 const { Message } = require('discord.js')
 const queries = require('../db/queries')
+const { checkChannelAndRun } = require('../utils.js')
 
 /**
- * @param {Message} message 
+ * @param {Message} message
  */
 const now = async (message) => {
   const { author, channel, guild } = message
 
-  const exists = await queries.checkIfExists(channel)
-
-  if (!exists) {
-    message.react('❌')
-  } else {
-    queries.recordTop1({
+  checkChannelAndRun(channel, () => {
+    queries.top1.record({
       user_id: author.id,
       user_name: author.username,
       channel_id: channel.id,
@@ -26,7 +23,7 @@ const now = async (message) => {
       console.log(e)
       message.react('⚠❌')
     })
-  }
+  })
 }
 
 module.exports = {

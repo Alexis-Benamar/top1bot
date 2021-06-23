@@ -1,6 +1,7 @@
 const Discord = require('discord.js')
 const dotenv = require('dotenv')
 
+const { last } = require('./commands/last')
 const { now } = require('./commands/now')
 const { register } = require('./commands/register')
 const { ignoreMessage } = require('./utils')
@@ -35,4 +36,5 @@ client.on('message', message => {
 
   if (command[1] === 'register' && isAdmin) register(message)
   if (command[1] === 'now') now(message)
+  if (command[1] === 'last') last(message)
 })
