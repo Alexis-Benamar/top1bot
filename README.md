@@ -2,7 +2,7 @@
 
 >_Winner winner chicken dinner_
 
-Discord bot that can register a user and keep track of his last Warzone victory by saving it in a JSON file.
+Discord bot that can keep track of a user's Warzone victory (~top1) by saving it in a database.
 
 Useless therefore essential.
 
