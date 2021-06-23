@@ -11,7 +11,7 @@ const register = async (message) => {
   const exists = await queries.checkIfExists(channel)
 
   if (exists) {
-    message.react('🔁')
+    message.channel.send(`Le channel <#${channel.id}> du serveur **${guild.name}** est déjà enregistré`)
   } else {
     queries.registerChannel({
       channel_id: channel.id,
@@ -20,7 +20,7 @@ const register = async (message) => {
       discord_name: guild.name,
       created_at: new Date()
     }).then(() => {
-      message.react('✅')
+      message.channel.send(`Channel <#${channel.id}> enregistré ✅`)
     }).catch(e => {
       console.log(e)
       message.react('⚠❌')
