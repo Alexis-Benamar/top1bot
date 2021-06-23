@@ -4,22 +4,21 @@ const dotenv = require('dotenv')
 const { last } = require('./commands/last')
 const { now } = require('./commands/now')
 const { register } = require('./commands/register')
-const { ignoreMessage } = require('./utils')
+const { checkChannelAndRun, ignoreMessage } = require('./utils')
 
 dotenv.config()
 
 const client = new Discord.Client()
 const coolingDown = new Set()
-// TODO : prevent users from registering a top1 within 15 minutes
-const top1CoolDown = new Set()
+const top1Cooldown = new Set()
 
 client.login(process.env.DISCORD_TOKEN)
 client.once('ready', () => {
-  console.log('henlo')
+  console.log('henlo 🐢')
 })
 
 client.on('message', message => {
-  const { author, content } = message
+  const { author, channel, content } = message
   const isAdmin = author.id === process.env.ADMIN_ID
 
   // Ignore unnecessary messages
@@ -35,6 +34,19 @@ client.on('message', message => {
   const command = content.split(' ')
 
   if (command[1] === 'register' && isAdmin) register(message)
-  if (command[1] === 'now') now(message)
-  if (command[1] === 'last') last(message)
+  if (command[1] === 'last') checkChannelAndRun(channel, () => last(message))
+  if (command[1] === 'now') {
+    checkChannelAndRun(channel, () => {
+      // Ignore !top1 now within 15 minutes interval
+      if (top1Cooldown.has(author.id)) return
+
+      // Add author to top1Cooldown so he has to wait for 15 minutes
+      top1Cooldown.add(author.id)
+      setTimeout(() => {
+        top1Cooldown.delete(author.id);
+      }, 15 * 60 * 1000);
+
+      now(message)
+    })
+  }
 })
