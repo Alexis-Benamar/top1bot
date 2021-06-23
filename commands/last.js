@@ -12,7 +12,7 @@ const last = async (message) => {
   if (!lastTop1) {
     channel.send(`Pas encore de top 1 enregistrés pour <@${author.id}> 😔`)
   } else {
-    channel.send(`Dernier top 1 pour <@${author.id}>:\n${lastTop1.created_at.toLocaleString('fr-FR')}`)
+    channel.send(`Dernier top 1 pour <@${author.id}>:\n${lastTop1.created_at.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })}`)
   }
 }
 
