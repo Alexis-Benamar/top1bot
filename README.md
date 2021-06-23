@@ -6,16 +6,19 @@ Discord bot that can register a user and keep track of his last Warzone victory 
 
 Useless therefore essential.
 
+## Docs
+You can find a list of available commands [here](./DOCS).
+
 ## TODO
 * [*] The bot lives
 * [*] Register channels
 * [*] Register user's top1
 * [*] Only listen to channels saved in db
 * [*] Admin commands
+* [*] Handle messages / replies
+* [*] Docs with command list
 * [ ] Load registered channels at startup instead of checking everytime
-* [ ] Handle messages / replies
 * [ ] Refacto using command loader / handler
-* [ ] Docs with command list
 * [ ] i18
 
 ## Ideas

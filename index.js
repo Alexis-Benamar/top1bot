@@ -1,6 +1,7 @@
 const Discord = require('discord.js')
 const dotenv = require('dotenv')
 
+const { help } = require('./commands/help')
 const { last } = require('./commands/last')
 const { now } = require('./commands/now')
 const { register } = require('./commands/register')
@@ -33,7 +34,7 @@ client.on('message', message => {
 
   const command = content.split(' ')
 
-  if (command[1] === 'register' && isAdmin) register(message)
+  if (command[1] === 'help') help(message)
   if (command[1] === 'last') checkChannelAndRun(channel, () => last(message))
   if (command[1] === 'now') {
     checkChannelAndRun(channel, () => {
@@ -49,4 +50,5 @@ client.on('message', message => {
       now(message)
     })
   }
+  if (command[1] === 'register' && isAdmin) register(message)
 })
