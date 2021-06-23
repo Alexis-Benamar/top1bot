@@ -27,8 +27,7 @@ async function channelExists(channel) {
  * @param {Message} message
  */
 function ignoreMessage(message) {
-  // return message.channel.id !== process.env.CHANNEL_ID ||
-  return !message.content.startsWith('!top1 ')
+  return message.author.bot || !message.content.startsWith('!top1 ')
 }
 
 module.exports = {
