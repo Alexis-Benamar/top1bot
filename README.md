@@ -7,7 +7,7 @@ Discord bot that can keep track of a user's Warzone victory (~top1) by saving it
 Useless therefore essential.
 
 ## Docs
-You can find a list of available commands [here](./DOCS).
+You can find a list of available commands [here](./DOCS.md).
 
 ## TODO
 * [x] The bot lives
