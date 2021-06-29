@@ -15,7 +15,7 @@ async function channelExists(channel) {
  * @param {Channel} channel,
  * @param {function} callback,
  */
- function checkChannelAndRun(channel, callback) {
+function checkChannelAndRun(channel, callback) {
   channelExists(channel).then(exists => {
     if (!exists) return
 
@@ -30,8 +30,16 @@ function ignoreMessage(message) {
   return message.author.bot || !message.content.startsWith('!top1 ')
 }
 
+/**
+ * @param {String} id
+ */
+function isAdmin(id) {
+  return id === process.env.ADMIN_ID
+}
+
 module.exports = {
   channelExists,
   checkChannelAndRun,
-  ignoreMessage
+  ignoreMessage,
+  isAdmin,
 }

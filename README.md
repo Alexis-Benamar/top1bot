@@ -17,9 +17,12 @@ You can find a list of available commands [here](./DOCS.md).
 * [x] Admin commands
 * [x] Handle messages / replies
 * [x] Docs with command list
+* [x] Refacto using command loader / handler
 * [ ] Load registered channels at startup instead of checking everytime
-* [ ] Refacto using command loader / handler
+* [ ] Find efficient way to check last top1 date in DB to prevent spamming 'now'
 * [ ] i18
+* [ ] Refacto 'help' to follow this https://github.com/eritislami/evobot/blob/master/commands/help.js
+  * [ ] Delete static DOCS.md & add script that generates it based on commands 'descriptions'
 
 ## Ideas
 
