@@ -13,6 +13,12 @@ module.exports = {
 
       return checkChannel !== undefined
     },
+    async getWhitelist() {
+      const channels =
+        await db('channels')
+
+      return channels
+    },
     /**
      * @param newChannel
      */

@@ -1,6 +1,6 @@
 const { Message } = require('discord.js')
 const queries = require('../db/queries')
-const { channelExists, isAdmin } = require('../utils.js')
+const { channelExists, isAdmin, refreshWhitelistedChannels } = require('../utils.js')
 
 module.exports = {
   name: 'register',
@@ -24,8 +24,10 @@ module.exports = {
         discord_id: guild.id,
         discord_name: guild.name,
         created_at: new Date()
-      }).then(() => {
+      }).then(async () => {
         channel.send(`Channel <#${channel.id}> enregistré ✅`)
+
+        await refreshWhitelistedChannels(message.client)
       }).catch(e => {
         console.log(e)
         message.react('⚠❌')
