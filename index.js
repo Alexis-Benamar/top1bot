@@ -1,26 +1,39 @@
-const Discord = require('discord.js')
+const { Client, Collection } = require('discord.js')
 const dotenv = require('dotenv')
+const { readdirSync } = require('fs')
+const { join } = require('path')
 
-const { help } = require('./commands/help')
-const { last } = require('./commands/last')
-const { now } = require('./commands/now')
-const { register } = require('./commands/register')
 const { checkChannelAndRun, ignoreMessage } = require('./utils')
 
+/**
+ * Setup
+ */
 dotenv.config()
 
-const client = new Discord.Client()
+const client = new Client()
 const coolingDown = new Set()
-const top1Cooldown = new Set()
 
+client.commands = new Collection()
+client.top1Cooldowns = new Collection()
 client.login(process.env.DISCORD_TOKEN)
 client.once('ready', () => {
   console.log('henlo 🐢')
 })
 
+/**
+ * Import commands
+ */
+const commandFiles = readdirSync(join(__dirname, 'commands')).filter(file => file.endsWith('.js'))
+for (const file of commandFiles) {
+  const command = require(join(__dirname, 'commands', `${file}`))
+  client.commands.set(command.name, command)
+}
+
+/**
+ * On message
+ */
 client.on('message', message => {
   const { author, channel, content } = message
-  const isAdmin = author.id === process.env.ADMIN_ID
 
   // Ignore unnecessary messages
   if (ignoreMessage(message)) return
@@ -32,23 +45,16 @@ client.on('message', message => {
     coolingDown.delete(author.id);
   }, 2500);
 
-  const command = content.split(' ')
+  // Slice 5 to remove '!top1' from content
+  const args = content.slice(5).trim().split(' ')
+  const commandName = args.shift().toLowerCase()
+  const command = client.commands.get(commandName)
 
-  if (command[1] === 'help') help(message)
-  if (command[1] === 'last') checkChannelAndRun(channel, () => last(message))
-  if (command[1] === 'now') {
-    checkChannelAndRun(channel, () => {
-      // Ignore !top1 now within 15 minutes interval
-      if (top1Cooldown.has(author.id)) return
+  if (!command) return
 
-      // Add author to top1Cooldown so he has to wait for 15 minutes
-      top1Cooldown.add(author.id)
-      setTimeout(() => {
-        top1Cooldown.delete(author.id);
-      }, 15 * 60 * 1000);
-
-      now(message)
-    })
+  try {
+    checkChannelAndRun(channel, () => command.execute(message, args))
+  } catch (error) {
+    console.error(error)
   }
-  if (command[1] === 'register' && isAdmin) register(message)
 })
