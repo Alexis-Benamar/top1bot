@@ -1,4 +1,4 @@
-const { Channel, Message } = require('discord.js')
+const { Channel, Client, Message } = require('discord.js')
 const queries = require('./db/queries')
 
 /**
@@ -12,15 +12,16 @@ async function channelExists(channel) {
 
 
 /**
- * @param {Channel} channel,
+ * @param {Message} message,
+ * @param {string} commandName,
  * @param {function} callback,
  */
-function checkChannelAndRun(channel, callback) {
-  channelExists(channel).then(exists => {
-    if (!exists) return
+function checkChannelAndRun(message, commandName, callback) {
+  const { whitelistedChannels } = message.client
 
-    callback()
-  })
+  if (commandName !== 'register' && !whitelistedChannels.has(message.channel.id)) return
+
+  callback()
 }
 
 /**
@@ -37,9 +38,24 @@ function isAdmin(id) {
   return id === process.env.ADMIN_ID
 }
 
+/**
+ * @param {Client} client
+ */
+async function refreshWhitelistedChannels(client) {
+  const channels = await queries.channel.getWhitelist()
+
+  client.whitelistedChannels.clear()
+  for (const channel of channels) {
+    client.whitelistedChannels.set(channel.channel_id, channel)
+  }
+
+  console.log('whitelisted channels:', client.whitelistedChannels)
+}
+
 module.exports = {
   channelExists,
   checkChannelAndRun,
   ignoreMessage,
   isAdmin,
+  refreshWhitelistedChannels,
 }

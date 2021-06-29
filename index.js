@@ -3,7 +3,8 @@ const dotenv = require('dotenv')
 const { readdirSync } = require('fs')
 const { join } = require('path')
 
-const { checkChannelAndRun, ignoreMessage } = require('./utils')
+const queries = require('./db/queries')
+const { checkChannelAndRun, ignoreMessage, refreshWhitelistedChannels } = require('./utils')
 
 /**
  * Setup
@@ -15,10 +16,16 @@ const coolingDown = new Set()
 
 client.commands = new Collection()
 client.top1Cooldowns = new Collection()
+client.whitelistedChannels = new Collection()
+
 client.login(process.env.DISCORD_TOKEN)
-client.once('ready', () => {
+client.once('ready', async () => {
   console.log('henlo 🐢')
+
+  // Get whitelisted channels on startup
+  await refreshWhitelistedChannels(client)
 })
+
 
 /**
  * Import commands
@@ -53,7 +60,7 @@ client.on('message', message => {
   if (!command) return
 
   try {
-    checkChannelAndRun(channel, () => command.execute(message, args))
+    checkChannelAndRun(message, commandName, () => command.execute(message, args))
   } catch (error) {
     console.error(error)
   }
