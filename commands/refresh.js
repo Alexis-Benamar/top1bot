@@ -7,7 +7,6 @@ module.exports = {
   description: 'Refreshes whitelisted channels',
   /**
    * @param {Message} message
-   * @param {string[]} args
    */
   async execute(message) {
     if (!isAdmin) return

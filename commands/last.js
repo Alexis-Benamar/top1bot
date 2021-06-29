@@ -11,6 +11,8 @@ module.exports = {
   async execute(message, args) {
     const { author, channel } = message
 
+    // TODO: stats with args
+
     const lastTop1 = await queries.top1.getLast(author)
 
     if (!lastTop1) {
