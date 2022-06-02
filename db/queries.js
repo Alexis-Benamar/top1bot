@@ -23,7 +23,7 @@ module.exports = {
      * @param newChannel
      */
     async register(newChannel) {
-      const [id] = await db('channels').insert(newChannel).returning('id')
+      const [id] = await db('channels').insert(newChannel).returning('channel_id')
 
       return id
     },

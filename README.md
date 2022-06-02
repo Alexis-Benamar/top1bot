@@ -19,7 +19,7 @@ You can find a list of available commands [here](./DOCS.md).
 * [x] Docs with command list
 * [x] Refacto using command loader / handler
 * [x] Load registered channels at startup instead of checking everytime
-* [ ] Maintenance mode (maybe allow replies only on test server)
+* [x] Maintenance mode (maybe allow replies only on test server)
 * [ ] Find efficient way to check last top1 date in DB to prevent spamming 'now'
 * [ ] i18
 * [ ] Refacto 'help' to follow this https://github.com/eritislami/evobot/blob/master/commands/help.js

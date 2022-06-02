@@ -3,13 +3,16 @@ const dotenv = require('dotenv')
 const { readdirSync } = require('fs')
 const { join } = require('path')
 
-const queries = require('./db/queries')
 const { checkChannelAndRun, ignoreMessage, refreshWhitelistedChannels } = require('./utils')
 
 /**
  * Setup
  */
 dotenv.config()
+
+if (process.env.NODE_ENV === 'development') {
+  console.log('Running in DEVELOPMENT mode')
+}
 
 const client = new Client()
 const coolingDown = new Set()

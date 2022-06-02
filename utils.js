@@ -28,7 +28,9 @@ function checkChannelAndRun(message, commandName, callback) {
  * @param {Message} message
  */
 function ignoreMessage(message) {
-  return message.author.bot || !message.content.startsWith('!top1 ')
+  return message.author.bot
+    || !message.content.startsWith('!top1 ')
+    || process.env.NODE_ENV === 'development' && message.channel.id !== process.env.TEST_CHANNEL
 }
 
 /**
