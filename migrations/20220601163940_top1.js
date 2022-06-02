@@ -5,9 +5,6 @@ exports.up = async (knex) => {
     table.text('user_id')
     table.text('user_name')
     table.text('channel_id')
-    table.text('channel_name')
-    table.text('discord_id')
-    table.text('discord_name')
     table.dateTime('created_at')
   })
 }

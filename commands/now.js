@@ -9,7 +9,7 @@ module.exports = {
    * @param {Message} message
    */
   async execute(message) {
-    const { author, channel, client, guild } = message
+    const { author, channel, client } = message
 
     // Ignore !top1 now within 15 minutes interval
     if (client.top1Cooldowns.has(author.id)) return
@@ -24,9 +24,6 @@ module.exports = {
       user_id: author.id,
       user_name: author.username,
       channel_id: channel.id,
-      channel_name: channel.name,
-      discord_id: guild.id,
-      discord_name: guild.name,
       created_at: new Date(),
     }).then(() => {
       message.react('✅')
