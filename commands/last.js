@@ -1,4 +1,5 @@
 const { Message } = require('discord.js')
+
 const queries = require('../db/queries')
 
 module.exports = {
@@ -18,7 +19,7 @@ module.exports = {
     if (!lastTop1) {
       channel.send(`Pas encore de top 1 enregistrés pour <@${author.id}> 😔`)
     } else {
-      channel.send(`Dernier top 1 pour <@${author.id}>:\n${lastTop1.created_at.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })}`)
+      channel.send(`Dernier top 1 pour <@${author.id}>:\n${lastTop1.created_at.toLocaleString('en-GB', { timeZone: 'Europe/Paris' })}`)
     }
   }
 }
