@@ -50,10 +50,10 @@ client.on('message', message => {
   if (coolingDown.has(author.id)) return
 
   // Add message author to coolingDown
-  coolingDown.add(author.id);
+  coolingDown.add(author.id)
   setTimeout(() => {
-    coolingDown.delete(author.id);
-  }, 2500);
+    coolingDown.delete(author.id)
+  }, 2500)
 
   // Slice 5 to remove '!top1' from content
   const args = content.slice(5).trim().split(' ')

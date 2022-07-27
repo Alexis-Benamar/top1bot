@@ -13,7 +13,6 @@
     "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",
     "knex": "^0.95.6",
-    "moment": "^2.29.1",
     "pg": "^8.6.0"
   },
   "devDependencies": {

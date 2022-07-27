@@ -17,8 +17,8 @@ module.exports = {
     // Add author to top1Cooldown so he has to wait for 15 minutes
     client.top1Cooldowns.set(author.id, {})
     setTimeout(() => {
-      client.top1Cooldowns.delete(author.id);
-    }, 15 * 60 * 1000);
+      client.top1Cooldowns.delete(author.id)
+    }, 15 * 60 * 1000)
 
     queries.top1.record({
       user_id: author.id,
